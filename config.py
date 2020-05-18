@@ -1,0 +1,10 @@
+#BOT_TOKEN=""
+BOT_TOKEN=""
+EMBED_INFO=0x0000ff
+EMBED_SUCCESS=0x00ff00
+EMBED_ERROR=0xff0000
+EMBED_WARN=0xffff00
+THUMBNAIL="https://images-ext-1.discordapp.net/external/DzHch2TxWwMVa3iqyekC5BcehtgufrA81EYZEPEBYfM/http/download.seaicons.com/icons/paomedia/small-n-flat/1024/sign-sync-icon.png?format=png&width=834&height=834"
+LOADED="https://media.discordapp.net/attachments/280099627456266251/646223990557245447/image0.png"
+WARN="https://media.discordapp.net/attachments/280099627456266251/646226309181079553/image0.png"
+UNLOADED="https://media.discordapp.net/attachments/280099627456266251/646227068001976350/image0.png"
