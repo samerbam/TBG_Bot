@@ -1,5 +1,5 @@
 import discord
-
+import config
 
 
 
@@ -23,3 +23,9 @@ def make_embed(*, author_url=None, fields=[], footer_text=None, thumbnail_url=No
 	if author_url:
 		embed.set_author(name=author_url[0], url=author_url[1], icon_url=author_url[2])
 	return embed
+
+def check_perms(user):
+	if user in config.MANAGERS:
+		return True
+	else:
+		return False

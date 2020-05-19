@@ -3,94 +3,43 @@ from discord.ext import commands
 import utils
 from utils import make_embed
 #import config
-
+import math
+import config
 
 class Commands(commands.Cog):
-    def __init__(self, bot):
-        self.bot = bot
+	def __init__(self, bot):
+ 		self.bot = bot
 
-    async def on_ready(self):
-        #self.channel = self.bot.get_channel(config.channel)
-        await self.bot.say('''```css\n+ \N{WHITE HEAVY CHECK MARK} cogs.commands```''')
+	async def on_ready(self):
+		#self.channel = self.bot.get_channel(config.channel)
+		await self.bot.say('''```css\n+ \N{WHITE HEAVY CHECK MARK} cogs.commands```''')
 
     #@commands.command(aliases=["p"])
     #async def ping(self, ctx):
     #    await self.channel.send('📢 Pong! {0}ms'.format(round(self.bot.latency*1000)))
 
-    #@commands.command(hidden=True)
-    #async def load(self, ctx, *, module):
-    #    """Loads a module."""
-    #    try:
-    #        self.bot.load_extension(module)
-    #    except Exception as e:
-    #        await ctx.send('```py\n{traceback.format_exc()}\n```')
-    #    else:
-    #        await ctx.send('\N{OK HAND SIGN}')
-
-    #@commands.command(hidden=True)
-    #async def unload(self, ctx, *, module):
-    #    """Unloads a module."""
-    #    try:
-    #        self.bot.unload_extension(module)
-    #    except Exception as e:
-    #        await ctx.send(f'```py\n{traceback.format_exc()}\n```')
-    #    else:
-    #        await ctx.send('\N{OK HAND SIGN}')
-
-    #@commands.command(name='reload', hidden=True)
-    #async def _reload(self, ctx, *, module):
-    #    """Reloads a module."""
-    #    try:
-    #        self.bot.unload_extension(module)
-    #        self.bot.load_extension(module)
-    #    except Exception as e:
-    #        await ctx.send(f'```py\n{traceback.format_exc()}\n```')
-    #    else:
-    #        await ctx.send('\N{OK HAND SIGN}')
-   
-    """@commands.command(aliases=["r"])
-    async def reload(self, ctx, *, extensions: str = "*"):
-        Reload an extension.
-
-        Use `reload *` to reload all extensions.
-
-        This command is automatically run by `update`.
-        
-        await self.reload_(ctx, *extensions.split())
-
-    async def reload_(self, ctx, *extensions):
-        if "*" in extensions:
-            title = "Reloading all extensions"
-        elif len(extensions) > 1:
-            title = "Reloading extensions"
-        else:
-            title = f"Reloading `{extensions[0]}`"
-        embed = make_embed(color=utils.EMBED_INFO, title=title)
-        m = await ctx.send(embed=embed)
-        color = utils.EMBED_SUCCESS
-        description = ""
-        if "*" in extensions:
-            #extensions = get_extensions()
-            #extensions = startup_extensions
-            extensions = list(self.bot.extensions.keys())
-        for extension in extensions:
-            self.bot.unload_extension(extension)
-            try:
-                self.bot.load_extension(extension)
-                description += f"Successfully loaded `{extension}`.\n"
-            except:
-                color = utils.EMBED_ERROR
-                description += f"Failed to load `{extension}`.\n"
-                _, exc, _ = sys.exc_info()
-                if not isinstance(exc, ImportError):
-                    await report_error(ctx, exc, *extensions)
-        description += "Done."
-        await m.edit(
-            embed=make_embed(
-                color=color, title=title.replace("ing", "ed"), description=description
-            )
-        )
-"""
-
+	@commands.command(aliases=["nc", "netherc", "checkn"], pass_context=True)
+	async def nethercheck(self, ctx, *qoords):
+		try:
+			x=int(qoords[0])
+			z=int(qoords[1])
+			xc=config.XC
+			zc=config.ZC
+			if (math.sqrt(((x*x)-(xc*xc))+((z*z)-(zc*zc))) < 8000):
+				embed = make_embed(author_url=["Your location is safe!", "", config.SUCCESS], color=config.EMBED_SUCCESS)
+				await ctx.author.send(embed=embed)
+				await ctx.message.delete()
+			else:
+				embed = make_embed(author_url=["Your location is not safe!", "", config.WARN], color=config.EMBED_WARN, footer_text="The staff team has been notified.")
+				await ctx.author.send(embed=embed)
+				channel = self.bot.get_channel(config.MOD_CHANNEL_ID)
+				await channel.send(f"@everyone {ctx.author} has a location outside of nether border! X: {x}, Z:{z}")
+				await ctx.message.delete()
+		except:
+			embed = make_embed(author_url=["Invalid input.", "", config.WARN], color=config.EMBED_WARN, footer_text="Aliases for command: /nc /netherc /checkn", fields=[["Usage:", "**/nethercheck x z**", False], ["Examples:", "**/nethercheck 7836 1634**\n**/nethercheck 100 100**", False]])
+			await ctx.author.send(embed=embed)
+			await ctx.message.delete()
+	
+	
 def setup(bot):
 	bot.add_cog(Commands(bot))

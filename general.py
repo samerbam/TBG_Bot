@@ -49,33 +49,33 @@ class General(commands.Cog):
 #		if isinstance(error, MissingPermissions):
 #			text = "Sorry {}, you do not have permissions to do that!".format(ctx.message.author)
 #			await bot.send_message(ctx.message.channel, text)
-	
-	@commands.command()
-	async def hello(self, ctx):
-		"""Prints "Hello World!" """
-		#return await self.bot.say("Hello World!")
-		return await ctx.send("Hello World!")
-	
-	@commands.command(name='repeat', aliases=['copy', 'mimic'])
-	async def do_repeat(self, ctx, *, our_input: str):
-		await ctx.send(our_input)
-	
+#	
+#	@commands.command()
+#	async def hello(self, ctx):
+#		"""Prints "Hello World!" """
+#		#return await self.bot.say("Hello World!")
+#		return await ctx.send("Hello World!")
+#	
+#	@commands.command(name='repeat', aliases=['copy', 'mimic'])
+#	async def do_repeat(self, ctx, *, our_input: str):
+#		await ctx.send(our_input)
+#	
 
-
-	@commands.command(pass_context=True)
-	async def announce(self, ctx, text = None, servChan : discord.TextChannel = None):
-		text = "```" + text + "```"
-		if servChan == None:
-			server = ctx.message.guild
-			for i in server.channels:
-				if i.type==discord.ChannelType.text:
-					#print(i) #Debug
-					#await self.bot.send_message(i, text)
-					await i.send(text)
-		else:
-			if servChan.type==discord.ChannelType.text:
-				#await self.bot.send_message(servChan, text)
-				await servChan.send(text)
+#
+#	@commands.command(pass_context=True)
+#	async def announce(self, ctx, text = None, servChan : discord.TextChannel = None):
+#		text = "```" + text + "```"
+#		if servChan == None:
+#			server = ctx.message.guild
+#			for i in server.channels:
+#				if i.type==discord.ChannelType.text:
+#					#print(i) #Debug
+#					#await self.bot.send_message(i, text)
+#					await i.send(text)
+#		else:
+#			if servChan.type==discord.ChannelType.text:
+#				#await self.bot.send_message(servChan, text)
+#				await servChan.send(text)
 
 def setup(bot):
 	bot.add_cog(General(bot))

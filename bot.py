@@ -3,10 +3,10 @@ from discord.ext.commands import Bot
 import config
 
 
-bot = Bot(command_prefix="=!", description="The Beautiful Game Bot", pm_help=True)
-
+bot = Bot(command_prefix="/", description="The Beautiful Game Bot")
+bot.remove_command('help')
 #startup_extensions = ["playlist", "admin", "general", "meeting"]
-startup_extensions = ["general", "managment"]
+startup_extensions = ["general", "managment", "commands"]
 
 if __name__ == "__main__":
 	for extension in startup_extensions:
